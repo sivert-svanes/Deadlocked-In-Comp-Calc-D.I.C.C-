@@ -37,11 +37,12 @@ class ItemMode(Enum):
 
 Effect = Union[float, Tuple[ItemMode, float], Dict[str, Union[str, float]]]
 class Item:
-    def __init__(self, name, price, item_category, stats: Dict[int, Effect]):
-        self.itemType = item_category
+    def __init__(self, name, price, item_category, stats: Dict[int, Effect], item_type: ItemType):
+        self.itemCategory = item_category
         self.name = name
         self.price = price
         self.stats: Dict[int, Effect] = stats
+        self.itemType = item_type
 
 
 class Character:
@@ -78,7 +79,7 @@ class Character:
             self.statWeights.update(statWeights)
 
         if typeWeights is not None:
-            assert set(StatKey).intersection(set(typeWeights)), "Stat weights must contain at least one of StatKey"
+            assert set(ItemType).intersection(set(typeWeights)), "Stat weights must contain at least one of StatKey"
             self.typeWeights.update(typeWeights)
 
         self.currentItems = current_items
@@ -86,7 +87,7 @@ class Character:
         self.name = name
         self.characterType = characterType
         self.stats = stats
-        
+
         assert self.stats.keys() == set(StatKey), "Stats must be a dict of StatKey"
         assert self.statWeights.keys() == set(StatKey), "Stats must be a dict of StatKey"
 
@@ -154,7 +155,7 @@ def calculate_item_to_buy(character: Character, possible_items: list[Item], debu
             save_weight = character.currentSouls / i.price
 
         increase = relative_stat_increase(character, i)
-        weighted_increase = increase * save_weight * compound_stat_weight
+        weighted_increase = increase * save_weight * compound_stat_weight * character.typeWeights.get(i.itemType, 1.0)
 
         if weighted_increase > best_item[1]:
             best_item = (i, weighted_increase)
@@ -188,6 +189,11 @@ if __name__ == '__main__':
             StatKey.SPIRITPOWER: 1.5,
             StatKey.STAMINA: 1.1,
             StatKey.AMMO: 2.0,
+        },
+        typeWeights={
+            ItemType.SUSTAIN: 1.15,
+            ItemType.GUN: 1.2,
+            ItemType.SPIRIT: 1.25
         }
     )
 
@@ -196,6 +202,7 @@ if __name__ == '__main__':
             name='Titanic Mag',
             price=1600,
             item_category=ItemCategory.GUN,
+            item_type=ItemType.GUN,
             stats={
                 StatKey.BULLETDAMAGE.value: (ItemMode.MULTIPLY, 1.12),
                 StatKey.AMMO.value: (ItemMode.MULTIPLY, 1.9),
@@ -205,6 +212,7 @@ if __name__ == '__main__':
             name='Extra Health',
             price=800,
             item_category=ItemCategory.HEALTH,
+            item_type=ItemType.SUSTAIN,
             stats={
                 StatKey.HEALTH.value: (ItemMode.ADD, 185.0),
             }
@@ -213,6 +221,7 @@ if __name__ == '__main__':
             name='Extra Spirit',
             price=800,
             item_category=ItemCategory.SPIRIT,
+            item_type=ItemType.SPIRIT,
             stats={
                 StatKey.SPIRITPOWER.value: (ItemMode.ADD, 10.0),
             }
@@ -221,14 +230,17 @@ if __name__ == '__main__':
             name='Improved Spirit',
             price=1600,
             item_category=ItemCategory.SPIRIT,
+            item_type=ItemType.SPIRIT,
             stats={
                 StatKey.SPIRITPOWER.value: (ItemMode.ADD, 18.0),
             }
         ),
         'Enduring_speed': Item(
             name='Enduring Speed',
+            item_type=ItemType.MOVEMENT,
             price=1600,
             item_category=ItemCategory.HEALTH,
+
             stats={
                 StatKey.MOVE_SPEED.value: (ItemMode.ADD, 2.0),
                 StatKey.HEALTH_REGEN.value: (ItemMode.ADD, 2.0),
@@ -236,6 +248,7 @@ if __name__ == '__main__':
         ),
         'Spirit_lifesteal': Item(
             name='Spirit Lifesteal',
+            item_type=ItemType.SUSTAIN,
             price=1600,
             item_category=ItemCategory.HEALTH,
             stats={
