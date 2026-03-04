@@ -167,6 +167,9 @@ def calculate_item_to_buy(character: Character, possible_items: list[Item], debu
 
     return best_item[0]
 
+def character_score_calculator(character: Character):
+    return
+
 if __name__ == '__main__':
     infernus = Character(
         name='Infernus',
