@@ -44,7 +44,6 @@ class Item:
         self.stats: Dict[StatKey, Effect] = stats
         self.itemType = item_type
 
-
 class Character:
     def __init__(
             self, name, characterType, stats: dict, currentSouls=0, current_items: list[Item]=None, statWeights: dict=None,
@@ -121,7 +120,15 @@ class Character:
         for key, value in self.statWeights.items():
             print(key.name,": ", value)
 
+class User:
+    def __init__ (self, character: Character, kills: int, deaths: int, assists: int):
+        self.character = character
+        self.kills = kills
+        self.deaths = deaths
+        self.assists = assists
 
+    def character_score_calculator(self):
+        return
 def relative_stat_increase(character: Character, item: Item):
     total_percent = 0.0
     for key_idx, (mode, val) in item.stats.items():
@@ -166,9 +173,6 @@ def calculate_item_to_buy(character: Character, possible_items: list[Item], debu
                 f"| compound percent stat increase = {increase:.2f}% | weighted score = {weighted_increase:.3f} |")
 
     return best_item[0]
-
-def character_score_calculator(character: Character):
-    return
 
 if __name__ == '__main__':
     infernus = Character(
