@@ -37,11 +37,11 @@ class ItemMode(Enum):
 
 Effect = Union[float, Tuple[ItemMode, float], Dict[str, Union[str, float]]]
 class Item:
-    def __init__(self, name, price, item_category, stats: Dict[int, Effect], item_type: ItemType):
+    def __init__(self, name, price, item_category: ItemCategory, stats: Dict[StatKey, Effect], item_type: ItemType):
         self.itemCategory = item_category
         self.name = name
         self.price = price
-        self.stats: Dict[int, Effect] = stats
+        self.stats: Dict[StatKey, Effect] = stats
         self.itemType = item_type
 
 
@@ -204,8 +204,8 @@ if __name__ == '__main__':
             item_category=ItemCategory.GUN,
             item_type=ItemType.GUN,
             stats={
-                StatKey.BULLETDAMAGE.value: (ItemMode.MULTIPLY, 1.12),
-                StatKey.AMMO.value: (ItemMode.MULTIPLY, 1.9),
+                StatKey.BULLETDAMAGE: (ItemMode.MULTIPLY, 1.12),
+                StatKey.AMMO: (ItemMode.MULTIPLY, 1.9),
             }
         ),
         'Extra_health': Item(
@@ -214,7 +214,7 @@ if __name__ == '__main__':
             item_category=ItemCategory.HEALTH,
             item_type=ItemType.SUSTAIN,
             stats={
-                StatKey.HEALTH.value: (ItemMode.ADD, 185.0),
+                StatKey.HEALTH: (ItemMode.ADD, 185.0),
             }
         ),
         'Extra_spirit': Item(
@@ -223,7 +223,7 @@ if __name__ == '__main__':
             item_category=ItemCategory.SPIRIT,
             item_type=ItemType.SPIRIT,
             stats={
-                StatKey.SPIRITPOWER.value: (ItemMode.ADD, 10.0),
+                StatKey.SPIRITPOWER: (ItemMode.ADD, 10.0),
             }
         ),
         'Improved_spirit': Item(
@@ -232,7 +232,7 @@ if __name__ == '__main__':
             item_category=ItemCategory.SPIRIT,
             item_type=ItemType.SPIRIT,
             stats={
-                StatKey.SPIRITPOWER.value: (ItemMode.ADD, 18.0),
+                StatKey.SPIRITPOWER: (ItemMode.ADD, 18.0),
             }
         ),
         'Enduring_speed': Item(
@@ -242,8 +242,8 @@ if __name__ == '__main__':
             item_category=ItemCategory.HEALTH,
 
             stats={
-                StatKey.MOVE_SPEED.value: (ItemMode.ADD, 2.0),
-                StatKey.HEALTH_REGEN.value: (ItemMode.ADD, 2.0),
+                StatKey.MOVE_SPEED: (ItemMode.ADD, 2.0),
+                StatKey.HEALTH_REGEN: (ItemMode.ADD, 2.0),
             }
         ),
         'Spirit_lifesteal': Item(
@@ -252,9 +252,9 @@ if __name__ == '__main__':
             price=1600,
             item_category=ItemCategory.HEALTH,
             stats={
-                StatKey.SPIRITPOWER.value: (ItemMode.ADD, 6.0),
-                StatKey.SPIRIT_LIFESTEAL.value: (ItemMode.ADD, 16.0 ),
-                StatKey.HEALTH.value: (ItemMode.ADD, 70.0),
+                StatKey.SPIRITPOWER: (ItemMode.ADD, 6.0),
+                StatKey.SPIRIT_LIFESTEAL: (ItemMode.ADD, 16.0 ),
+                StatKey.HEALTH: (ItemMode.ADD, 70.0),
             }
         )
     }
