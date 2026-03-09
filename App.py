@@ -166,6 +166,7 @@ def calculate_item_to_buy(character: Character, possible_items: list[Item], debu
     return best_item[0]
 
 if __name__ == '__main__':
+
     infernus = Character(
         name='Infernus',
         characterType = CharacterType.DPS,
@@ -222,6 +223,21 @@ if __name__ == '__main__':
             ItemType.GUN: 1.05,
             ItemType.SPIRIT: 1.45
         }
+    )
+    from User import User
+
+    sivert = User(
+        character=pocket,
+        kills=8,
+        deaths=1,
+        assists=5
+    )
+
+    tobias = User(
+        character=infernus,
+        kills=0,
+        deaths=10,
+        assists=4
     )
 
     items = {
@@ -285,7 +301,7 @@ if __name__ == '__main__':
             }
         )
     }
-
+    """""
     infernus.print_stats()
     print("")
 
@@ -295,3 +311,11 @@ if __name__ == '__main__':
         print(it.name)
 
     print("Optimal second item:", calculate_item_to_buy(infernus, list(items.values()), debug=True).name)
+    """
+
+    #Check User Class Functionality
+    sivert.add_to_team("Arch Mother")
+    print(User.check_team_characters("Arch Mother"))
+    tobias.add_to_team("Hidden King")
+    print(User.check_team_characters("Arch Mother"))
+    print(User.check_team_characters("Hidden King"))
