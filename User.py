@@ -20,12 +20,19 @@ class User:
         return
 
     def add_to_team(self, team_name: str) -> None:
+        if self not in User.Arch_Mother and self not in User.Hidden_King:
+            if team_name == "Arch Mother":
+                User.Arch_Mother.add(self)
+            elif team_name == "Hidden King":
+                User.Hidden_King.add(self)
+            else:
+                raise ValueError("Invalid team name. Must be 'Arch Mother' or 'Hidden King'.")
+
+    @classmethod
+    def check_team_characters(cls, team_name: str) -> list[str]:
         if team_name == "Arch Mother":
-            User.Arch_Mother.add(self)
-        elif team_name == "Hidden King":
-            User.Hidden_King.add(self)
-        else:
-            raise ValueError("Invalid team name. Must be 'Arch Mother' or 'Hidden King'.")
+            return [user.character.name for user in cls.Arch_Mother]
+        if team_name == "Hidden King":
+            return [user.character.name for user in cls.Hidden_King]
+        raise ValueError("Invalid team name. Must be 'Arch Mother' or 'Hidden King'.")
 
-
-    
