@@ -120,15 +120,6 @@ class Character:
         for key, value in self.statWeights.items():
             print(key.name,": ", value)
 
-class User:
-    def __init__ (self, character: Character, kills: int, deaths: int, assists: int):
-        self.character = character
-        self.kills = kills
-        self.deaths = deaths
-        self.assists = assists
-
-    def character_score_calculator(self):
-        return
 def relative_stat_increase(character: Character, item: Item):
     total_percent = 0.0
     for key_idx, (mode, val) in item.stats.items():
