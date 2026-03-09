@@ -195,6 +195,35 @@ if __name__ == '__main__':
         }
     )
 
+    pocket = Character(
+        name='Pocket',
+        characterType=CharacterType.DPS,
+        currentSouls=2400,
+        stats={
+            StatKey.HEALTH: 750,
+            StatKey.SPIRITPOWER: 0,
+            StatKey.STAMINA: 3,
+            StatKey.BULLETDAMAGE: 4.28,
+            StatKey.AMMO: 11,
+            StatKey.BPS: 1.9,
+            StatKey.HEALTH_REGEN: 1.0,
+            StatKey.MOVE_SPEED: 7.2,
+            StatKey.SPIRIT_LIFESTEAL: 0.0,
+        },
+        statWeights={
+            StatKey.BULLETDAMAGE: 0.3,
+            StatKey.HEALTH: 0.8,
+            StatKey.SPIRITPOWER: 2.0,
+            StatKey.STAMINA: 1.5,
+            StatKey.AMMO: 0.2,
+        },
+        typeWeights={
+            ItemType.SUSTAIN: 1.05,
+            ItemType.GUN: 1.05,
+            ItemType.SPIRIT: 1.45
+        }
+    )
+
     items = {
         'Titanic_mag': Item(
             name='Titanic Mag',
