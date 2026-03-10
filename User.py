@@ -1,6 +1,10 @@
-﻿from App import Character
+﻿from enum import Enum
 
+from App import Character
 
+class Teams(Enum):
+    ARCH_MOTHER = 1
+    HIDDEN_KING = 2
 class User:
 
     Arch_Mother: set["User"] = set()
@@ -19,20 +23,20 @@ class User:
     def character_score_calculator(self):
         return
 
-    def add_to_team(self, team_name: str) -> None:
+    def add_to_team(self, team: Teams) -> None:
         if self not in User.Arch_Mother and self not in User.Hidden_King:
-            if team_name == "Arch Mother":
+            if team == Teams.ARCH_MOTHER:
                 User.Arch_Mother.add(self)
-            elif team_name == "Hidden King":
+            elif team == Teams.HIDDEN_KING:
                 User.Hidden_King.add(self)
             else:
                 raise ValueError("Invalid team name. Must be 'Arch Mother' or 'Hidden King'.")
 
     @classmethod
-    def check_team_characters(cls, team_name: str) -> list[str]:
-        if team_name == "Arch Mother":
+    def check_team_characters(cls, team: Teams) -> list[str]:
+        if team == Teams.ARCH_MOTHER:
             return [user.character.name for user in cls.Arch_Mother]
-        if team_name == "Hidden King":
+        if team == Teams.HIDDEN_KING:
             return [user.character.name for user in cls.Hidden_King]
         raise ValueError("Invalid team name. Must be 'Arch Mother' or 'Hidden King'.")
 

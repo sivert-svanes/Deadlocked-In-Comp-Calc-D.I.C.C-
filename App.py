@@ -224,7 +224,7 @@ if __name__ == '__main__':
             ItemType.SPIRIT: 1.45
         }
     )
-    from User import User
+    from User import User, Teams
 
     sivert = User(
         character=pocket,
@@ -314,8 +314,8 @@ if __name__ == '__main__':
     """
 
     #Check User Class Functionality
-    sivert.add_to_team("Arch Mother")
-    print(User.check_team_characters("Arch Mother"))
-    tobias.add_to_team("Hidden King")
-    print(User.check_team_characters("Arch Mother"))
-    print(User.check_team_characters("Hidden King"))
+    sivert.add_to_team(Teams.ARCH_MOTHER)
+    print(User.check_team_characters(Teams.ARCH_MOTHER))
+    tobias.add_to_team(Teams.HIDDEN_KING)
+    print(User.check_team_characters(Teams.ARCH_MOTHER))
+    print(User.check_team_characters(Teams.HIDDEN_KING))
