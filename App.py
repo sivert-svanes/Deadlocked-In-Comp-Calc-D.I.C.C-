@@ -224,6 +224,35 @@ if __name__ == '__main__':
             ItemType.SPIRIT: 1.45
         }
     )
+
+    dynamo = Character(
+        name='Dynamo',
+        characterType=CharacterType.SUPPORT,
+        currentSouls=2400,
+        stats={
+            StatKey.HEALTH: 850,
+            StatKey.SPIRITPOWER: 0,
+            StatKey.STAMINA: 3,
+            StatKey.BULLETDAMAGE: 12.6,
+            StatKey.AMMO: 18,
+            StatKey.BPS: 3.81,
+            StatKey.HEALTH_REGEN: 1.8,
+            StatKey.MOVE_SPEED: 6.7,
+            StatKey.SPIRIT_LIFESTEAL: 0.0,
+        },
+        statWeights={
+            StatKey.BULLETDAMAGE: 0.3,
+            StatKey.HEALTH: 0.8,
+            StatKey.SPIRITPOWER: 2.0,
+            StatKey.STAMINA: 1.5,
+            StatKey.AMMO: 0.2,
+        },
+        typeWeights={
+            ItemType.SUSTAIN: 1.35,
+            ItemType.GUN: 1.05,
+            ItemType.SPIRIT: 1.25
+        }
+    )
     from User import User, Teams
 
     sivert = User(
@@ -237,6 +266,13 @@ if __name__ == '__main__':
         character=infernus,
         kills=0,
         deaths=10,
+        assists=4
+    )
+
+    iver = User(
+        character=dynamo,
+        kills=0,
+        deaths=20,
         assists=4
     )
 
@@ -315,7 +351,7 @@ if __name__ == '__main__':
 
     #Check User Class Functionality
     sivert.add_to_team(Teams.ARCH_MOTHER)
-    print(User.check_team_characters(Teams.ARCH_MOTHER))
     tobias.add_to_team(Teams.HIDDEN_KING)
-    print(User.check_team_characters(Teams.ARCH_MOTHER))
-    print(User.check_team_characters(Teams.HIDDEN_KING))
+    iver.add_to_team(Teams.ARCH_MOTHER)
+    User.check_team_characters(Teams.ARCH_MOTHER)
+    User.check_team_characters(Teams.HIDDEN_KING)

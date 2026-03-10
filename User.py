@@ -27,16 +27,21 @@ class User:
         if self not in User.Arch_Mother and self not in User.Hidden_King:
             if team == Teams.ARCH_MOTHER:
                 User.Arch_Mother.add(self)
+                print("Added to team Arch Mother:", self.character.name)
             elif team == Teams.HIDDEN_KING:
                 User.Hidden_King.add(self)
+                print("Added to team Hidden King:", self.character.name)
             else:
                 raise ValueError("Invalid team name. Must be 'Arch Mother' or 'Hidden King'.")
 
     @classmethod
-    def check_team_characters(cls, team: Teams) -> list[str]:
+    def check_team_characters(cls, team: Teams) -> None:
         if team == Teams.ARCH_MOTHER:
-            return [user.character.name for user in cls.Arch_Mother]
-        if team == Teams.HIDDEN_KING:
-            return [user.character.name for user in cls.Hidden_King]
-        raise ValueError("Invalid team name. Must be 'Arch Mother' or 'Hidden King'.")
+            team_list = [user.character.name for user in cls.Arch_Mother]
+            print("Arch Mother Mommy Supporters:", team_list)
+        elif team == Teams.HIDDEN_KING:
+            team_list = [user.character.name for user in cls.Hidden_King]
+            print("Hidden King Daddy Supporters:", team_list)
+        else:
+            raise ValueError("Invalid team name. Must be 'Arch Mother' or 'Hidden King'.")
 
