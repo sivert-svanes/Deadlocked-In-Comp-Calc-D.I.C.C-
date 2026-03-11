@@ -38,10 +38,10 @@ class User:
     def check_team_characters(cls, team: Teams) -> None:
         if team == Teams.ARCH_MOTHER:
             team_list = [user.character.name for user in cls.Arch_Mother]
-            print("Arch Mother Mommy Supporters:", team_list)
+            print("Arch Mommy Supporters:", team_list)
         elif team == Teams.HIDDEN_KING:
             team_list = [user.character.name for user in cls.Hidden_King]
-            print("Hidden King Daddy Supporters:", team_list)
+            print("Hidden Daddy Supporters:", team_list)
         else:
             raise ValueError("Invalid team name. Must be 'Arch Mother' or 'Hidden King'.")
 
