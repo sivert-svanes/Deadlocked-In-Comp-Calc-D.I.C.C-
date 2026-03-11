@@ -72,7 +72,7 @@ class Character:
 
         if current_items is None:
             current_items = []
-
+        # TODO Endre intersection, kanskje til within
         if statWeights is not None:
             assert set(StatKey).intersection(set(statWeights)), "Stat weights must contain at least one of StatKey"
             self.statWeights.update(statWeights)
