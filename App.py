@@ -1,5 +1,5 @@
 from enum import Enum
-from random import Random, randint, choice
+from random import randint, choice
 from typing import Union, Tuple, Dict, Any
 
 class CharacterType(Enum):
@@ -45,7 +45,7 @@ class Choices(Enum):
     next_phase = 3
     exit = 4
 
-Effect = Union[float, Tuple[ItemMode, float], Dict[str, Union[str, float]]]
+Effect = Tuple[ItemMode, float]
 class Item:
     def __init__(self, name, price, item_category: ItemCategory, stats: Dict[StatKey, Effect], item_type: ItemType):
         self.itemCategory = item_category
@@ -312,7 +312,7 @@ class User:
             self.menu()
 
             if self.time > 0.0:
-                self.is_fed_calc(debug=True)
+                self.is_fed_calc(debug=False)
 
             choice_user = input("Enter your choice: (1 - 4) ")
             try:
