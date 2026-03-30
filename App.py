@@ -747,7 +747,7 @@ if __name__ == '__main__':
     """
 
     #Check User Class Functionality
-    sivert.add_to_team(Teams.ARCH_MOTHER), iver.add_to_team(Teams.ARCH_MOTHER), legolas.add_to_team(Teams.ARCH_MOTHER), aragorn.add_to_team(Teams.ARCH_MOTHER), tobias.add_to_team(Teams.HIDDEN_KING), gimli.add_to_team(Teams.HIDDEN_KING), gandalf.add_to_team(Teams.HIDDEN_KING), frodo.add_to_team(Teams.HIDDEN_KING), tobias.add_to_team(Teams.ARCH_MOTHER, debug=True)
+    sivert.add_to_team(Teams.ARCH_MOTHER), iver.add_to_team(Teams.ARCH_MOTHER), legolas.add_to_team(Teams.ARCH_MOTHER), aragorn.add_to_team(Teams.ARCH_MOTHER), tobias.add_to_team(Teams.HIDDEN_KING), gimli.add_to_team(Teams.HIDDEN_KING), gandalf.add_to_team(Teams.HIDDEN_KING), frodo.add_to_team(Teams.HIDDEN_KING),
     #User.check_team_characters(Teams.ARCH_MOTHER),  User.check_team_characters(Teams.HIDDEN_KING)
 
     #print(sivert.character.characterType)
