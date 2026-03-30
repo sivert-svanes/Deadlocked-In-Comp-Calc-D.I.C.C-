@@ -1,3 +1,5 @@
+import logging
+import sys
 from enum import Enum
 from random import randint, choice
 from typing import Union, Tuple, Dict, Any
@@ -184,6 +186,10 @@ class User:
     Arch_Mother: set["User"] = set()
     Hidden_King: set["User"] = set()
 
+    @classmethod
+    def get_all_players(cls) -> set["User"]:
+        return cls.Arch_Mother | cls.Hidden_King
+
     def __init__(self, character: Character, kills: int = 0, deaths: int = 0, assists: int = 0):
         if not character:
             raise ValueError("Character cannot be None")
@@ -192,30 +198,43 @@ class User:
         self.kills = kills
         self.deaths = deaths
         self.assists = assists
+
     def add_to_team(self, team: Teams, debug=False) -> None:
+        team_sets = {
+            Teams.ARCH_MOTHER: User.Arch_Mother,
+            Teams.HIDDEN_KING: User.Hidden_King
+        }
+        target_team = team_sets[team]
+        temp_arch = User.Arch_Mother.copy()
+        temp_hidden = User.Hidden_King.copy()
+
+        if team not in team_sets:
+            raise ValueError("Invalid team. Must be Teams.ARCH_MOTHER or Teams.HIDDEN_KING")
+
+        if self in target_team:
+            if debug:
+                logging.error(f"{self.character.name} is already in {team.name}.")
+            return
+
+        if len(target_team) >= 5:
+            if debug:
+                logging.error(f"{team.name} is full. Cannot add more members.")
+            return
+
         if team == Teams.ARCH_MOTHER:
-            if len(User.Arch_Mother) >= 5:
-                if debug:
-                    print("Arch Mother team is full. Cannot add more members.")
-                return
-        elif team == Teams.HIDDEN_KING:
-            if len(User.Hidden_King) >= 5:
-                if debug:
-                    print("Hidden King team is full. Cannot add more members.")
-                return
-        if self not in User.Arch_Mother and self not in User.Hidden_King:
-            if team == Teams.ARCH_MOTHER:
-                User.Arch_Mother.add(self)
-                if debug:
-                    print("Added to team Arch Mother:", self.character.name)
-            elif team == Teams.HIDDEN_KING:
-                User.Hidden_King.add(self)
-                if debug:
-                    print("Added to team Hidden King:", self.character.name)
-            else:
-                raise ValueError("Invalid team name. Must be 'Arch Mother' or 'Hidden King'.")
+            temp_arch.add(self)
         else:
-            print(f"{self.character.name} is already in a team. Cannot add to another team OR be added again.")
+            temp_hidden.add(self)
+
+        if not temp_arch.isdisjoint(temp_hidden):
+            if debug:
+                logging.error('Arch Mother and Hidden King would have overlapping members.')
+            return
+
+        target_team.add(self)
+
+        if debug:
+            print(f"Added {self.character.name} to {team.name}")
     def check_team_membership(self) -> Teams:
         if self in User.Arch_Mother:
             return Teams.ARCH_MOTHER
